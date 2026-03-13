@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ribeiro Pichau - Hardware & Setup</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap');
+    
+    body {
+      font-family: 'Barlow', sans-serif;
+    }
+
+    /* Scrollbar geral */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121212;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ca3c3f;
+      border-radius: 4px;
+    }
+
+    /* BARRA DE CATEGORIAS: Comportamento Híbrido */
+    #nav-categorias {
+      display: flex;
+      overflow-x: auto;
+      gap: 0.5rem;
+      padding: 10px 5px;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    #nav-categorias::-webkit-scrollbar {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      #nav-categorias {
+        justify-content: center;
+        flex-wrap: wrap;
+        overflow-x: visible;
+      }
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#ca3c3f',
+            dark: '#121212',
+            header: '#2a2a2a',
+            card: '#1e1e1e',
+            accent: '#ffffff',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-dark text-accent relative">
+
+  <nav class="bg-header border-b border-primary shadow-lg sticky top-0 z-40">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center space-x-3">
+          <span class="text-xl font-bold text-white tracking-widest">RIBEIRO <span class="text-primary">PICHAU</span></span>
+        </div>
+        <div class="hidden md:flex space-x-8 items-center">
+          <a href="#produtos" class="font-bold hover:text-primary transition">Produtos</a>
+          <a href="#contato" class="font-bold hover:text-primary transition">Contato</a>
+          <button id="nav-cart-btn" class="flex items-center gap-2 bg-primary px-4 py-2 rounded-lg font-bold hover:bg-red-700 transition">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <span id="nav-cart-count">0</span>
+          </button>
+        </div>
+        <div class="md:hidden flex items-center gap-4">
+          <button id="mobile-cart-btn" class="text-primary flex items-center gap-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            <span id="mobile-cart-count" class="font-bold">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="bg-dark py-16">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center">
+      <div class="md:w-1/2 text-center md:text-left">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 uppercase tracking-tighter">
+          O Verdadeiro Poder do <span class="text-primary">Hardware</span>
+        </h2>
+        <p class="text-xl text-gray-400 mb-8">Peças de alta performance para quem não aceita menos que o máximo.</p>
+        <a href="#produtos" class="bg-primary text-white px-8 py-4 rounded-lg font-bold hover:bg-red-700 transition shadow-lg shadow-red-900/20">VER PRODUTOS</a>
+      </div>
+      <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center">
+        <img src="./assets/images/banner.png" alt="Banner PC Gamer" class="w-full max-w-md h-64 object-cover rounded-lg shadow-2xl border-2 border-primary/30">
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 bg-dark" id="produtos">
+    <div class="max-w-6xl mx-auto px-4">
+      <h1 class="text-3xl font-bold text-center mb-10 text-primary uppercase tracking-widest">Catálogo</h1>
+
+      <nav id="nav-categorias" class="mb-12">
+        <button data-cat="gpu" class="flex-none px-6 py-2 rounded-md bg-primary text-white font-bold text-sm transition btn-cat">GPU</button>
+        <button data-cat="cpu" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">PROCESSADOR</button>
+        <button data-cat="ram" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">RAM</button>
+        <button data-cat="mobo" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">PLACA MÃE</button>
+        <button data-cat="ssd" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">SSDS</button>
+        <button data-cat="hd" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">HDS</button>
+        <button data-cat="gabinetes" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">GABINETES</button>
+        <button data-cat="perifericos" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">PERIFÉRICOS</button>
+        <button data-cat="pcs" class="flex-none px-6 py-2 rounded-md bg-card text-gray-400 font-bold text-sm transition btn-cat">PCS MONTADOS</button>
+      </nav>
+
+      <div class="max-w-4xl mx-auto">
+        
+        <div id="cat-gpu" class="categoria-conteudo space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://allnations.com.br/images/thumbs/1355038_625.jpeg" alt="GPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('RTX 4090 Rog Strix', 'A placa de vídeo definitiva. 24GB de memória GDDR6X, performance extrema em 4K e Ray Tracing impecável.', 13500, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">RTX 4090 Rog Strix</h3>
+              <p class="text-gray-400 text-sm mt-1">24GB GDDR6X - Top de linha.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 13.500,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="GPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('RTX 4080 Super', 'Performance espetacular para entusiastas, ideal para jogar em QuadHD e 4K com altas taxas de quadros.', 7900, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">RTX 4080 Super</h3>
+              <p class="text-gray-400 text-sm mt-1">16GB GDDR6X.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 7.900,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="GPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('RX 7900 XTX', 'Flagship da AMD com 24GB. Incrível poder bruto para resoluções ultra-altas.', 7200, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">RX 7900 XTX</h3>
+              <p class="text-gray-400 text-sm mt-1">24GB AMD Radeon.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 7.200,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="GPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('RTX 4070 Ti Super', 'Excelente custo-benefício para quem quer DLSS 3 e 16GB de VRAM em 1440p.', 5800, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">RTX 4070 Ti Super</h3>
+              <p class="text-gray-400 text-sm mt-1">16GB GDDR6X.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 5.800,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="GPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('RX 7800 XT', 'A rainha do custo-benefício em 1440p. 16GB de VRAM e performance monstruosa.', 3850, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">RX 7800 XT</h3>
+              <p class="text-gray-400 text-sm mt-1">16GB GDDR6.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 3.850,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-cpu" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="CPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Ryzen 7 7800X3D', 'O melhor processador do mundo para jogos, graças à tecnologia 3D V-Cache.', 2950, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Ryzen 7 7800X3D</h3>
+              <p class="text-gray-400 text-sm mt-1">Rei dos Games (AM5).</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 2.950,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="CPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Core i9-14900K', 'Processador insano com 24 núcleos totais para produtividade extrema e jogos.', 3800, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Core i9-14900K</h3>
+              <p class="text-gray-400 text-sm mt-1">24 Cores / 32 Threads.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 3.800,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="CPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Ryzen 9 7950X', '16 núcleos focados em workstation, renderização de vídeos e multitarefas pesadas.', 3600, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Ryzen 9 7950X</h3>
+              <p class="text-gray-400 text-sm mt-1">Para Workstations.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 3.600,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="CPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Core i5-14600K', 'Equilíbrio perfeito de custo-benefício para máquinas modernas focadas em jogar liso.', 1950, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Core i5-14600K</h3>
+              <p class="text-gray-400 text-sm mt-1">14 Cores Híbridos.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.950,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="CPU" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Ryzen 5 7600X', 'Ponto de entrada matador para a plataforma AM5, oferecendo alto FPS.', 1450, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Ryzen 5 7600X</h3>
+              <p class="text-gray-400 text-sm mt-1">AM5 Performance.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.450,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-ram" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="RAM" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Corsair 32GB DDR5', 'Kit de memórias DDR5 em Dual Channel (2x16GB) operando a incríveis 6000MHz.', 1100, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Corsair 32GB DDR5</h3>
+              <p class="text-gray-400 text-sm mt-1">6000MHz Kit.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.100,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="RAM" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('G.Skill Trident Z5 32GB DDR5', 'Para quem busca o extremo: 7200MHz com latências baixíssimas e RGB impecável.', 1800, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">G.Skill 32GB DDR5</h3>
+              <p class="text-gray-400 text-sm mt-1">7200MHz Trident RGB.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.800,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="RAM" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Asgard Valkyrie 32GB DDR5', 'Memória branca com estética incrível, trabalhando a 6800MHz.', 1200, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Asgard 32GB DDR5</h3>
+              <p class="text-gray-400 text-sm mt-1">6800MHz Valkyrie White.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.200,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="RAM" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('XPG Spectrix 16GB RGB', 'Memória DDR4 de 3600MHz com iluminação RGB massiva.', 420, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">XPG 16GB DDR4 RGB</h3>
+              <p class="text-gray-400 text-sm mt-1">3600MHz Spectrix.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 420,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1562976540-1502c2145186?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="RAM" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Kingston Fury 16GB DDR4', 'Custo-benefício clássico. Pente de 16GB (ou 2x8) a 3200MHz sem firulas.', 350, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Kingston 16GB DDR4</h3>
+              <p class="text-gray-400 text-sm mt-1">3200MHz Fury Beast.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 350,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-mobo" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Placa Mãe" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Asus ROG Z790', 'Placa mãe robusta LGA 1700 com suporte a memórias DDR5, VRM parrudo e Wi-Fi 6E.', 4200, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Asus ROG Z790</h3>
+              <p class="text-gray-400 text-sm mt-1">LGA 1700 DDR5.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 4.200,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Placa Mãe" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Gigabyte X670 Aorus', 'Socket AM5 para Ryzen 7000+. Construção pesada e muitos slots M.2 PCI-e Gen 5.', 2500, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Gigabyte X670 Aorus</h3>
+              <p class="text-gray-400 text-sm mt-1">AM5 High-end.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 2.500,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Placa Mãe" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('MSI B650 Tomahawk WiFi', 'A placa mãe mais equilibrada para AM5. Ótimo VRM, design preto fosco.', 1850, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">MSI B650 WiFi</h3>
+              <p class="text-gray-400 text-sm mt-1">AM5 Tomahawk.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.850,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Placa Mãe" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Asus TUF B550M-Plus', 'Socket AM4 imortal. Suporta Ryzen 5000 com segurança militar e dissipadores grossos.', 980, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">TUF B550M-Plus</h3>
+              <p class="text-gray-400 text-sm mt-1">AM4 DDR4.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 980,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Placa Mãe" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('ASRock B450M Steel Legend', 'A favorita do custo-benefício. LEDs RGB nativos, branca/camuflada e barata.', 750, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">ASRock B450M Steel L.</h3>
+              <p class="text-gray-400 text-sm mt-1">AM4 Custo Benefício.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 750,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-ssd" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1628557044797-f21a177c37ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="SSD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Samsung 990 Pro 2TB', 'SSD M.2 NVMe Gen 4 super rápido com velocidades de leitura de até 7450MB/s.', 1450, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Samsung 990 Pro 2TB</h3>
+              <p class="text-gray-400 text-sm mt-1">7450MB/s Gen4.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.450,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1628557044797-f21a177c37ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="SSD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Crucial P3 Plus 2TB', 'A escolha inteligente para armazenamento em massa via NVMe com preço acessível.', 1100, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Crucial P3 Plus 2TB</h3>
+              <p class="text-gray-400 text-sm mt-1">NVMe 5000MB/s.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.100,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1628557044797-f21a177c37ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="SSD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('WD Black SN850X 1TB', 'Desempenho máximo para jogos e diminuição drástica nas telas de carregamento.', 890, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">WD Black 1TB</h3>
+              <p class="text-gray-400 text-sm mt-1">SN850X Gamer.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 890,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1628557044797-f21a177c37ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="SSD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('XPG S70 Blade 1TB', 'Acompanha dissipador de calor e bate incríveis 7400MB/s. Compatível com PS5.', 650, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">XPG S70 Blade 1TB</h3>
+              <p class="text-gray-400 text-sm mt-1">Com dissipador (PS5).</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 650,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1628557044797-f21a177c37ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="SSD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Kingston NV2 1TB', 'NVMe de entrada campeão de vendas. Instale o Windows e jogos com folga.', 450, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Kingston NV2 1TB</h3>
+              <p class="text-gray-400 text-sm mt-1">M.2 NVMe Básico.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 450,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-hd" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="HD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Seagate IronWolf 4TB', 'Desenvolvido especialmente para servidores NAS, dura anos funcionando 24/7 sem falhar.', 750, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Seagate IronWolf 4TB</h3>
+              <p class="text-gray-400 text-sm mt-1">Para Servidor NAS.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 750,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="HD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('WD Black 2TB', 'Série de alta performance da WD (7200 RPM) projetada para carregamentos rápidos.', 650, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">WD Black 2TB</h3>
+              <p class="text-gray-400 text-sm mt-1">7200 RPM Gamer.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 650,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="HD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Seagate Barracuda 2TB', 'Disco Rígido SATA confiável para armazenar sua biblioteca de jogos e arquivos pesados.', 380, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Seagate Barracuda 2TB</h3>
+              <p class="text-gray-400 text-sm mt-1">7200 RPM Padrão.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 380,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="HD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('WD Blue 1TB', 'Excelente opção secundária para guardar fotos, vídeos e documentos de forma segura.', 310, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">WD Blue 1TB</h3>
+              <p class="text-gray-400 text-sm mt-1">Desktop.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 310,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1597848212624-a19eb35e2651?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="HD" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Toshiba P300 1TB', 'Discreto e funcional. 7200 RPM para não comprometer a leitura diária de dados.', 290, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Toshiba P300 1TB</h3>
+              <p class="text-gray-400 text-sm mt-1">Custo benefício.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 290,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-gabinetes" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Gabinete" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Hyte Y60', 'Gabinete panorâmico exótico com vidro temperado curvo de 3 peças e suporte vertical de GPU.', 1400, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Hyte Y60</h3>
+              <p class="text-gray-400 text-sm mt-1">Red/Black Panorâmico.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.400,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Gabinete" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Lian Li O11 Dynamic', 'O lendário gabinete aquário para quem quer exibir o setup por completo com refrigeração custom.', 1300, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Lian Li O11 Dynamic</h3>
+              <p class="text-gray-400 text-sm mt-1">Black/Glass Aquário.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.300,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Gabinete" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('NZXT H9 Flow', 'Design duplo compartimento (Dual-chamber) para máxima circulação de ar e beleza impecável.', 1150, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">NZXT H9 Flow</h3>
+              <p class="text-gray-400 text-sm mt-1">White Aquário.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.150,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Gabinete" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Corsair 4000D Airflow', 'Frontal totalmente em mesh para garantir temperaturas incrivelmente baixas.', 720, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Corsair 4000D</h3>
+              <p class="text-gray-400 text-sm mt-1">Airflow Black.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 720,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Gabinete" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Montech Air 903 Max', 'Já acompanha 4 fans potentes e controladora. Excelente espaço por um preço justo.', 550, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Montech Air 903 Max</h3>
+              <p class="text-gray-400 text-sm mt-1">Mesh com 4 Fans RGB.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 550,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-perifericos" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Periférico" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Wooting 60HE', 'Teclado analógico revolucionário com switches magnéticos ajustáveis. Vantagem em jogos FPS.', 1800, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Wooting 60HE</h3>
+              <p class="text-gray-400 text-sm mt-1">Switches Magnéticos.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.800,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Periférico" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Corsair K100 RGB', 'Teclado mecânico óptico com chassi de alumínio, macro dedicadas e uma roda de controle multifunção.', 1600, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Corsair K100 RGB</h3>
+              <p class="text-gray-400 text-sm mt-1">Mecânico Optic.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 1.600,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Periférico" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('HyperX Cloud III Wireless', 'Headset sem fio com bateria duradoura e conforto extremo (Memory Foam). Áudio espacial 3D.', 950, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">HyperX Cloud III</h3>
+              <p class="text-gray-400 text-sm mt-1">Wireless Headset.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 950,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Periférico" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Razer DeathAdder V3 Pro', 'Formato ergonômico clássico reimaginado para apenas 63 gramas e um sensor insano.', 900, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Razer DeathAdder V3 Pro</h3>
+              <p class="text-gray-400 text-sm mt-1">Ergonômico Ultraleve.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 900,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Periférico" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('Logitech G Pro X Superlight', 'Mouse extremamente leve e ambidestro (comum em e-Sports). Sensor HERO.', 850, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">Logitech G Pro X</h3>
+              <p class="text-gray-400 text-sm mt-1">Superlight 2.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 850,00</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cat-pcs" class="categoria-conteudo hidden space-y-4">
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="PC Gamer" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('PC Workstation Threadripper', 'Monstro da produtividade com processador AMD Threadripper, 128GB de RAM e dupla RTX 4090.', 45000, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">PC Workstation Pro</h3>
+              <p class="text-gray-400 text-sm mt-1">Threadripper + Dual 4090.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 45.000,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="PC Gamer" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('PC Ultimate 4090', 'O PC definitivo: Core i9 14900K, 64GB DDR5, RTX 4090, Watercooler 360mm. Roda tudo em 4K Ultra.', 25000, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">PC Ultimate 4090</h3>
+              <p class="text-gray-400 text-sm mt-1">i9 + RTX 4090.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 25.000,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="PC Gamer" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('PC High 4070', 'Equilíbrio e beleza: Ryzen 7 7700X e RTX 4070 num gabinete aquário elegante.', 10500, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">PC High 4070</h3>
+              <p class="text-gray-400 text-sm mt-1">R7 + RTX 4070.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 10.500,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="PC Gamer" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('PC Streamer Pro', 'Feito para transmitir em 1080p sem gargalos. Intel Core i5 13400F e RTX 4060 Ti.', 7200, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">PC Streamer Pro</h3>
+              <p class="text-gray-400 text-sm mt-1">i5 + 4060 Ti.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 7.200,00</span>
+            </div>
+          </div>
+          <div class="bg-card p-4 rounded-lg border-l-4 border-primary shadow-lg flex items-center gap-4 hover:shadow-2xl transition">
+            <img src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="PC Gamer" class="w-24 h-24 object-cover rounded-md bg-white p-1 cursor-pointer hover:opacity-80 transition" onclick="openDetails('PC Custo Benefício', 'A porta de entrada ideal para o PC Gaming com AMD Ryzen 5 e placa RX 7600.', 4500, this.src)">
+            <div class="flex-1">
+              <h3 class="font-bold text-lg text-white">PC Custo Benefício</h3>
+              <p class="text-gray-400 text-sm mt-1">R5 + RX 7600.</p>
+              <span class="text-primary font-bold text-lg mt-2 block">R$ 4.500,00</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div id="details-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div class="bg-card border border-primary/30 rounded-xl shadow-2xl w-full max-w-md relative flex flex-col overflow-hidden">
+      <button onclick="closeDetails()" class="absolute top-3 right-3 bg-black/60 hover:bg-black rounded-full w-8 h-8 flex items-center justify-center text-white font-bold text-xl transition z-10">
+        &times;
+      </button>
+      
+      <img id="details-img" src="" alt="Produto" class="w-full h-56 object-cover bg-white p-2">
+      
+      <div class="p-6">
+        <h2 id="details-title" class="text-2xl font-bold text-white mb-2">Nome</h2>
+        <p id="details-desc" class="text-gray-400 text-sm leading-relaxed mb-6">Descrição do hardware...</p>
+        
+        <div class="flex justify-between items-center mt-2 pt-4 border-t border-gray-700">
+          <span id="details-price" class="text-primary font-bold text-2xl">R$ 0,00</span>
+          <button id="details-add-btn" class="bg-primary text-white font-bold px-5 py-2 rounded-lg hover:bg-red-700 transition shadow-md flex items-center gap-2">
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cart-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm transition-opacity">
+    <div class="bg-card border border-primary/50 rounded-xl shadow-2xl w-full max-w-md relative flex flex-col max-h-[90vh]">
+      <div class="p-5 border-b border-gray-700 flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          Seu Carrinho
+        </h2>
+        <button id="close-cart" class="text-gray-400 hover:text-white transition leading-none text-3xl">
+          &times;
+        </button>
+      </div>
+      
+      <div id="cart-items" class="p-5 space-y-4 overflow-y-auto flex-1">
+        </div>
+      
+      <div class="p-5 border-t border-gray-700 bg-dark rounded-b-xl">
+        <div class="flex justify-between items-center mb-6">
+          <p class="text-lg font-bold text-gray-300">Total do Pedido:</p>
+          <p id="cart-total" class="text-2xl font-bold text-primary">R$ 0,00</p>
+        </div>
+        
+        <button id="checkout-btn" class="w-full bg-[#25D366] text-white font-bold text-lg py-3 rounded-xl hover:bg-[#1ebe5d] transition shadow-md flex justify-center items-center gap-2">
+          Finalizar Pedido (Localização)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer id="contato" class="mt-20 text-center p-8 text-sm text-gray-400 bg-black border-t border-primary">
+    <h3 class="font-bold text-2xl text-white mb-2">Ribeiro <span class="text-primary">Pichau</span></h3>
+    <p>Rua Prof. Toledo, 500 Centro - Sorocaba</p>
+    <p class="text-primary">WhatsApp: (15) 98766-4321</p>
+    <div class="mt-4 text-xs">
+      &copy; 2026 Ribeiro Pichau Hardware. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script>
+    // --- LÓGICA DE CATEGORIAS ---
+    const botoes = document.querySelectorAll('.btn-cat');
+    const conteudos = document.querySelectorAll('.categoria-conteudo');
+
+    function mudarCategoria(cat) {
+      conteudos.forEach(div => {
+        div.id === 'cat-' + cat ? div.classList.remove('hidden') : div.classList.add('hidden');
+      });
+
+      botoes.forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.classList.add('bg-primary', 'text-white');
+          btn.classList.remove('bg-card', 'text-gray-400');
+        } else {
+          btn.classList.remove('bg-primary', 'text-white');
+          btn.classList.add('bg-card', 'text-gray-400');
+        }
+      });
+    }
+
+    botoes.forEach(btn => {
+      btn.addEventListener('click', () => {
+        mudarCategoria(btn.dataset.cat);
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      });
+    });
+
+    // --- INJETAR BOTÕES "ADICIONAR" E CORRIGIR A LEITURA DO PREÇO ---
+    document.querySelectorAll('.categoria-conteudo > div').forEach(card => {
+      const name = card.querySelector('h3').innerText;
+      const priceText = card.querySelector('span.text-primary').innerText;
+      
+      // Correção: Transforma "R$ 13.500,00" -> "13500,00" -> "13500.00" -> Número perfeito
+      const rawPrice = priceText.replace('R$', '').trim();
+      const cleanPrice = rawPrice.split('.').join('').replace(',', '.');
+      const numericPrice = parseFloat(cleanPrice);
+
+      const addBtn = document.createElement('button');
+      addBtn.innerHTML = '+ Add';
+      addBtn.className = 'ml-auto bg-primary text-white font-bold px-4 py-2 rounded-lg hover:bg-red-700 transition active:scale-95';
+      addBtn.onclick = () => addToCart(name, numericPrice);
+      
+      card.appendChild(addBtn);
+    });
+
+    // --- LÓGICA DO CARRINHO ---
+    let cart = [];
+    const cartModal = document.getElementById('cart-modal');
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+    const navCartCount = document.getElementById('nav-cart-count');
+    const mobileCartCount = document.getElementById('mobile-cart-count');
+
+    function addToCart(name, price) {
+      const existingItem = cart.find(item => item.name === name);
+      if (existingItem) {
+        existingItem.qtd += 1;
+      } else {
+        cart.push({ name, price, qtd: 1 });
+      }
+      updateCartUI();
+      
+      navCartCount.parentElement.classList.add('scale-110');
+      setTimeout(() => navCartCount.parentElement.classList.remove('scale-110'), 200);
+    }
+
+    function changeQty(name, delta) {
+      const item = cart.find(i => i.name === name);
+      if (item) {
+        item.qtd += delta;
+        if (item.qtd <= 0) {
+          cart = cart.filter(i => i.name !== name);
+        }
+        updateCartUI();
+      }
+    }
+
+    function updateCartUI() {
+      const totalItems = cart.reduce((acc, item) => acc + item.qtd, 0);
+      navCartCount.innerText = totalItems;
+      mobileCartCount.innerText = totalItems;
+
+      cartItemsContainer.innerHTML = '';
+      let totalValue = 0;
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="text-gray-500 text-center py-4">O seu carrinho está vazio.</p>';
+      } else {
+        cart.forEach(item => {
+          totalValue += item.price * item.qtd;
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'flex justify-between items-center py-3 border-b border-gray-700 last:border-0';
+          itemDiv.innerHTML = `
+            <div>
+              <h4 class="font-bold text-white text-[15px]">${item.name}</h4>
+              <p class="text-[13px] text-gray-400 mt-1">${item.qtd}x R$ ${item.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="changeQty('${item.name}', -1)" class="w-8 h-8 flex items-center justify-center bg-gray-700 rounded-md text-white font-bold text-lg hover:bg-gray-600 transition">-</button>
+              <span class="font-bold w-4 text-center text-white">${item.qtd}</span>
+              <button onclick="changeQty('${item.name}', 1)" class="w-8 h-8 flex items-center justify-center bg-primary rounded-md text-white font-bold text-lg hover:bg-red-700 transition">+</button>
+            </div>
+          `;
+          cartItemsContainer.appendChild(itemDiv);
+        });
+      }
+
+      cartTotalElement.innerText = `R$ ${totalValue.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+    }
+
+    // Modal Cart Togglers
+    document.getElementById('nav-cart-btn').addEventListener('click', () => cartModal.classList.remove('hidden'));
+    document.getElementById('mobile-cart-btn').addEventListener('click', () => cartModal.classList.remove('hidden'));
+    document.getElementById('close-cart').addEventListener('click', () => cartModal.classList.add('hidden'));
+
+    cartModal.addEventListener('click', (e) => {
+      if (e.target === cartModal) cartModal.classList.add('hidden');
+    });
+
+    // --- LÓGICA DO MODAL DE DETALHES ---
+    const detailsModal = document.getElementById('details-modal');
+    const detailsImg = document.getElementById('details-img');
+    const detailsTitle = document.getElementById('details-title');
+    const detailsDesc = document.getElementById('details-desc');
+    const detailsPrice = document.getElementById('details-price');
+    const detailsAddBtn = document.getElementById('details-add-btn');
+
+    function openDetails(name, desc, price, imgSrc) {
+      detailsTitle.innerText = name;
+      detailsDesc.innerText = desc;
+      detailsPrice.innerText = `R$ ${price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+      detailsImg.src = imgSrc;
+      
+      detailsAddBtn.onclick = () => {
+        addToCart(name, price);
+        closeDetails();
+      };
+      
+      detailsModal.classList.remove('hidden');
+    }
+
+    function closeDetails() {
+      detailsModal.classList.add('hidden');
+    }
+
+    detailsModal.addEventListener('click', (e) => {
+      if (e.target === detailsModal) closeDetails();
+    });
+
+    // --- LÓGICA DE CHECKOUT E GEOLOCALIZAÇÃO ---
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      if(cart.length === 0) {
+        alert("O seu carrinho está vazio!");
+        return;
+      }
+
+      const btn = document.getElementById('checkout-btn');
+      const textOriginal = btn.innerHTML;
+      btn.innerText = "Buscando localização...";
+      btn.disabled = true;
+
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            
+            btn.innerHTML = textOriginal;
+            btn.disabled = false;
+            
+            alert(`Pedido Fechado com Sucesso!\nSua localização: Latitude ${lat.toFixed(4)}, Longitude ${lng.toFixed(4)}\nOs DADOS SERÃO LIMPOS`);
+            
+            cart = [];
+            updateCartUI();
+            cartModal.classList.add('hidden');
+          },
+          (erro) => {
+            btn.innerHTML = textOriginal;
+            btn.disabled = false;
+            alert('Não foi possível obter sua localização (GPS). Os DADOS SERÃO LIMPOS.');
+            
+            cart = [];
+            updateCartUI();
+            cartModal.classList.add('hidden');
+          }
+        );
+      } else {
+        alert('Seu navegador não tem suporte a GPS. Os DADOS SERÃO LIMPOS.');
+        btn.innerHTML = textOriginal;
+        btn.disabled = false;
+
+        cart = [];
+        updateCartUI();
+        cartModal.classList.add('hidden');
+      }
+    });
+
+  </script>
+</body>
+</html>
