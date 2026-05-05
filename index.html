@@ -31,7 +31,13 @@
     <header class="flex items-center justify-between px-6 mt-6">
         <h1 class="text-xl font-bold">Ribeiro Pichau</h1>
 
-        <button id="menuBtn" class="md:hidden text-3xl">☰</button>
+        <div class="flex items-center gap-3">
+            <button onclick="abrirCarrinho()" class="bg-primary px-4 py-2 rounded-lg">
+                Carrinho (<span id="qtd-carrinho">0</span>)
+            </button>
+
+            <button id="menuBtn" class="md:hidden text-3xl">☰</button>
+        </div>
 
         <nav class="hidden md:block">
             <ul class="flex gap-8 text-lg">
@@ -73,12 +79,77 @@
         <div id="lista-produtos" class="grid grid-cols-2 gap-4"></div>
     </section>
 
+    <!-- CARRINHO -->
+    <div id="carrinhoModal"
+        class="fixed top-0 right-[-100%] w-[80%] h-full bg-gray-800 p-6 transition-all duration-300 z-50">
+
+        <button onclick="fecharCarrinho()">Fechar</button>
+
+        <h2 class="text-xl font-bold mb-4">Seu Carrinho</h2>
+
+        <div id="itens-carrinho"></div>
+
+        <button onclick="finalizarPedido()"
+            class="bg-green-600 w-full py-3 mt-4 rounded-lg">
+            Finalizar Pedido
+        </button>
+    </div>
+
+    <!-- SCRIPT -->
     <script>
         const API_URL = 'https://hrdware-back-ycoz.vercel.app/api';
+
         const navCategorias = document.getElementById('nav-categorias');
         const listaProdutos = document.getElementById('lista-produtos');
 
         let categorias = [];
+        let carrinho = [];
+
+        function atualizarCarrinhoUI() {
+            document.getElementById("qtd-carrinho").innerText = carrinho.length;
+        }
+
+        function adicionarCarrinho(produto) {
+            carrinho.push(produto);
+            atualizarCarrinhoUI();
+            alert("Produto adicionado!");
+        }
+
+        function abrirCarrinho() {
+            document.getElementById("carrinhoModal").style.right = "0";
+            renderCarrinho();
+        }
+
+        function fecharCarrinho() {
+            document.getElementById("carrinhoModal").style.right = "-100%";
+        }
+
+        function renderCarrinho() {
+            const container = document.getElementById("itens-carrinho");
+            container.innerHTML = "";
+
+            carrinho.forEach(p => {
+                container.innerHTML += `
+                    <div class="border-b border-gray-700 py-2">
+                        ${p.nome} - ${p.preco.toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}
+                    </div>
+                `;
+            });
+        }
+
+        function finalizarPedido() {
+            if (carrinho.length === 0) {
+                alert("Carrinho vazio!");
+                return;
+            }
+
+            alert("Pedido realizado!");
+
+            carrinho = [];
+            atualizarCarrinhoUI();
+
+            window.location.href = "estoque.html";
+        }
 
         async function carregarCategorias() {
             const res = await fetch(`${API_URL}/categorias`);
@@ -112,10 +183,17 @@
 
                 card.innerHTML = `
                     <img src="${p.imagem}" class="h-24 mx-auto object-contain">
+
                     <h3 class="font-bold mt-2">${p.nome}</h3>
+
                     <p class="text-primary font-bold mt-1">
                         ${p.preco.toLocaleString('pt-BR', {style:'currency',currency:'BRL'})}
                     </p>
+
+                    <button onclick='adicionarCarrinho(${JSON.stringify(p)})'
+                        class="w-full mt-2 bg-primary py-2 rounded-lg">
+                        Adicionar
+                    </button>
                 `;
 
                 listaProdutos.appendChild(card);
