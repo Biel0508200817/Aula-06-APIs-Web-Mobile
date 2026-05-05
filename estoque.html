@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Estoque - Ribeiro Pichau</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        barlow: ['Barlow', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#ca3c3f'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-barlow bg-gray-900 text-gray-100">
+
+    <!-- HEADER -->
+    <header class="flex items-center justify-between px-6 mt-6">
+        <h1 class="text-xl font-bold">Controle de Estoque</h1>
+
+        <a href="index.html" class="bg-primary px-4 py-2 rounded-lg">
+            Voltar
+        </a>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <section class="p-6">
+
+        <h2 class="text-2xl font-bold mb-6">Produtos em Estoque</h2>
+
+        <div id="estoque-lista" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+    </section>
+
+    <script>
+        const API_URL = 'https://hrdware-back-ycoz.vercel.app/api';
+        const lista = document.getElementById('estoque-lista');
+
+        async function carregarEstoque() {
+            lista.innerHTML = "Carregando...";
+
+            try {
+                const res = await fetch(`${API_URL}/produtos`);
+                const produtos = await res.json();
+
+                lista.innerHTML = "";
+
+                produtos.forEach(p => {
+                    const card = document.createElement('div');
+
+                    card.className = "bg-gray-800 p-4 rounded-xl border border-gray-700";
+
+                    card.innerHTML = `
+                        <img src="${p.imagem}" class="h-20 mx-auto object-contain mb-2">
+
+                        <h3 class="font-bold">${p.nome}</h3>
+
+                        <p class="text-sm text-gray-400">
+                            Estoque: <span id="qtd-${p.id}">${p.estoque || 0}</span>
+                        </p>
+
+                        <div class="flex gap-2 mt-3">
+
+                            <button onclick="alterarEstoque(${p.id}, 1)"
+                                class="flex-1 bg-green-600 py-2 rounded-lg">
+                                + Entrada
+                            </button>
+
+                            <button onclick="alterarEstoque(${p.id}, -1)"
+                                class="flex-1 bg-red-600 py-2 rounded-lg">
+                                - Saída
+                            </button>
+
+                        </div>
+                    `;
+
+                    lista.appendChild(card);
+                });
+
+            } catch (err) {
+                lista.innerHTML = `
+                    <div class="bg-red-900 p-4 rounded">
+                        Erro ao carregar estoque
+                    </div>
+                `;
+            }
+        }
+
+        async function alterarEstoque(id, valor) {
+            const span = document.getElementById(`qtd-${id}`);
+            let atual = parseInt(span.innerText);
+
+            let novo = atual + valor;
+            if (novo < 0) novo = 0;
+
+            span.innerText = novo;
+
+            // Atualiza no backend (ajuste conforme sua API)
+            await fetch(`${API_URL}/produtos/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ estoque: novo })
+            });
+        }
+
+        carregarEstoque();
+    </script>
+
+</body>
+
+</html>
